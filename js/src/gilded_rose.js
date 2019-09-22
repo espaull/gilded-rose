@@ -38,24 +38,25 @@ const decayQuality = (item, decayRate) => {
   if (newQuality < 0) newQuality = 0;
 
   item.quality = newQuality;
-  item.sell_in -= 1;
 };
 
-const updateQuality = (item, type, sell_in, baseDecay) => {
+const updateQuality = (item, type, baseDecay) => {
   let decayRate = baseDecay;
 
   if (type === 'legendary') return;
 
+  item.sell_in--;
+
   if (type === 'pass') {
-    if (sell_in <= 0) {
+    if (item.sell_in <= 0) {
       return (item.quality = 0);
-    } else if (sell_in <= 5) {
+    } else if (item.sell_in <= 5) {
       decayRate = -3;
-    } else if (sell_in <= 10) {
+    } else if (item.sell_in <= 10) {
       decayRate = -2;
     }
-  } else {
-    if (sell_in < 0) {
+  } else if (type !== 'cheese') {
+    if (item.sell_in < 0) {
       decayRate *= 2;
     }
   }
@@ -63,10 +64,10 @@ const updateQuality = (item, type, sell_in, baseDecay) => {
   decayQuality(item, decayRate);
 };
 
-const updateItems = () => {
+const update_quality = () => {
   Object.keys(itemTypes).map(type => {
     for (const item of itemTypes[type].items) {
-      updateQuality(item, type, item.sell_in, itemTypes[type].baseDecay);
+      updateQuality(item, type, itemTypes[type].baseDecay);
     }
   });
 };
