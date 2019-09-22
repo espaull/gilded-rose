@@ -23,11 +23,17 @@ describe('Gilded Rose', function() {
     update_quality();
 
     expect(items[0].quality).toBe(1);
+    expect(items[0].sell_in).toBe(1);
     expect(items[1].quality).toBe(6);
+    expect(items[1].sell_in).toBe(4);
     expect(items[2].quality).toBe(80);
+    expect(items[2].sell_in).toBe(0);
     expect(items[3].quality).toBe(21);
+    expect(items[3].sell_in).toBe(14);
     expect(items[4].quality).toBe(4);
+    expect(items[4].sell_in).toBe(2);
     expect(items[5].quality).toBe(44);
+    expect(items[5].sell_in).toBe(9);
   });
 
   it('should subtract 1 from a regular items quality if sell_in is greater 0, 2 if not', () => {
