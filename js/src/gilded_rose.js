@@ -31,13 +31,10 @@ const categoriseItems = () => {
 };
 
 const decayQuality = (item, decayRate) => {
-  const { quality } = item;
-  let newQuality = quality - decayRate;
-
-  if (newQuality > 50) newQuality = 50;
-  if (newQuality < 0) newQuality = 0;
-
-  item.quality = newQuality;
+  item.quality =
+    decayRate > 0
+      ? Math.max(0, item.quality - decayRate)
+      : Math.min(50, item.quality - decayRate);
 };
 
 const updateQuality = (item, type, baseDecay) => {
